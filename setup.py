@@ -21,6 +21,7 @@ setup(name='pdfkit',
       url="http://github.com/deactivated/ctypes-pdfkit",
       description='An experiment in accessing PDFKit via ctypes.',
       packages=find_packages(exclude=['ez_setup']),
+      long_description=read('README.rst'),
       zip_safe=False,
       classifiers=[
           "Development Status :: 2 - Pre-Alpha",

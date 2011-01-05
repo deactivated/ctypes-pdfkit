@@ -2,8 +2,8 @@
 ctypes-pdfkit - An experiment in accessing PDFKit via ctypes.
 =============================================================
 
-* Do not confuse the presence of a README for an indication that this
-  code is production worthy or even particularly useful. *
+  Do not confuse the presence of a README for an indication that this
+  code is production worthy or even particularly useful.
 
 Apple includes a sophisticated PDF manipulation API with Mac OS X,
 called PDFKit [#]_.  This repo includes some experimental code that
@@ -15,7 +15,7 @@ Python in a production-level system, you will probably be better off
 using that.
 
 Sample Usage
-------------
+============
 
 ::
 
