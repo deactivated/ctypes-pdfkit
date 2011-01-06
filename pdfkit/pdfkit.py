@@ -16,4 +16,5 @@ class PDFDocument(ObjCObj):
         url = NSURL.from_path(url)
         doc = cls()
         doc.send('initWithURL:', url)
+        doc.send('autorelease')
         return doc

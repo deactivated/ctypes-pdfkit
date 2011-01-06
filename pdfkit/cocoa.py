@@ -131,8 +131,6 @@ class NSString(ObjCObj):
         return s.decode('utf8')
 
 
-
-    
 class NSEnumerator(ObjCObj):
     def __iter__(self):
         while True:
