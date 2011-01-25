@@ -86,6 +86,8 @@ class ObjCMeta(type):
 
     @classmethod
     def to_python(mcs, obj):
+        if obj is None:
+            return None
         objc_class = obj
         while objc_class:
             cls_name = objc.object_getClassName(objc_class)
@@ -117,8 +119,8 @@ class ObjCObj(object):
     def __str__(self):
         d = self.send('description')
         return str(d)
-        
 
+        
 class NSString(ObjCObj):
     @classmethod
     def from_python(cls, s):
@@ -168,12 +170,27 @@ class NSDictionary(ObjCObj):
 
 
 class NSAutoreleasePool(object):
-    def __enter__(self):
+    def __init__(self):
+        self.pool = None
+        self.drained = False
+
+    def alloc(self):
         pool = objc_send(objc_class('NSAutoreleasePool'), 'alloc')
         self.pool = objc_send(pool, 'init')
+        
+    def drain(self):
+        if self.pool and not self.drained:
+            objc_send(self.pool, 'drain')
+            self.drained = True
+
+    def __enter__(self):
+        self.alloc()
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        objc_send(self.pool, 'drain')
+        self.drain()
+        
+    def __del__(self):
+        self.drain()
 
         
 class NSURL(ObjCObj):
@@ -183,3 +200,7 @@ class NSURL(ObjCObj):
                         
                         NSString.from_python(s).objc_obj)
         return cls(obj)
+
+
+_root_autorelease_pool = NSAutoreleasePool()
+_root_autorelease_pool.alloc()

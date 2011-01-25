@@ -1,0 +1,19 @@
+#!/usr/bin/env python
+
+import sys
+import itertools
+
+from pdfkit import *
+
+
+if __name__ == '__main__':
+    doc = PDFDocument.from_path(sys.argv[1])
+    attrs = doc.document_attributes
+    for a, b in attrs.items():
+        print "%s: %s" % (a, b)
+
+    pages = doc.pages
+    for i in range(10):
+        p = pages.next()
+        print "Page", i
+        print unicode(p.text)
